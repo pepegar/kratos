@@ -10,20 +10,20 @@ services:
         target: /var/lib/sqlite
         read_only: false
       - type: bind
-        source: ./contrib/quickstart/kratos/email-password
+        source: ./contrib/quickstart/kratos/oidc
         target: /etc/config/kratos
     command: -c /etc/config/kratos/kratos.yml migrate sql -e --yes
     restart: on-failure
     networks:
       - intranet
-  kratos-selfservice-ui-node:
-    image: oryd/kratos-selfservice-ui-node:v0.9.0-alpha.2
-    environment:
-      - KRATOS_PUBLIC_URL=http://kratos:4433/
-      - KRATOS_BROWSER_URL=http://127.0.0.1:4433/
-    networks:
-      - intranet
-    restart: on-failure
+  # kratos-selfservice-ui-node:
+  #   image: oryd/kratos-selfservice-ui-node:v0.9.0-alpha.2
+  #   environment:
+  #     - KRATOS_PUBLIC_URL=http://kratos:4433/
+  #     - KRATOS_BROWSER_URL=http://127.0.0.1:4433/
+  #   networks:
+  #     - intranet
+  #   restart: on-failure
   kratos:
     depends_on:
       - kratos-migrate
