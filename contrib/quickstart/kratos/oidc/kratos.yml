@@ -16,14 +16,17 @@ selfservice:
     - http://127.0.0.1:4455
 
   methods:
+    password:
+      enabled: false
     oidc:
       enabled: true
       config:
         providers:
-          - id: "google"
-            provider: "google"
-            client_id: 962496010051-7biac41o583lkdj5s8qrq2jmkq1ln6d0.apps.googleusercontent.com
-            mapper_url: bG9jYWwgY2xhaW1zID0gewogIGVtYWlsX3ZlcmlmaWVkOiB0cnVlCn0gKyBzdGQuZXh0VmFyKCdjbGFpbXMnKTsKCnsKICBpZGVudGl0eTogewogICAgdHJhaXRzOiB7CiAgICAgIGVtYWlsOiBjbGFpbXMuZW1haWwsCiAgICAgIGZpcnN0X25hbWU6IGNsYWltcy5naXZlbl9uYW1lLAogICAgICBsYXN0X25hbWU6IGNsYWltcy5mYW1pbHlfbmFtZQogICAgfSwKICB9LAp9
+          - id: google
+            provider: google
+            client_id: add your clientid here
+            client_secret: add your secret here
+            mapper_url: base64://bG9jYWwgY2xhaW1zID0gewogIGVtYWlsX3ZlcmlmaWVkOiBmYWxzZQp9ICsgc3RkLmV4dFZhcignY2xhaW1zJyk7Cgp7CiAgaWRlbnRpdHk6IHsKICAgIHRyYWl0czogewogICAgICBbaWYgImVtYWlsIiBpbiBjbGFpbXMgJiYgY2xhaW1zLmVtYWlsX3ZlcmlmaWVkIHRoZW4gImVtYWlsIiBlbHNlIG51bGxdOiBjbGFpbXMuZW1haWwsCiAgICB9LAogIH0sCn0K
             scope:
               - email
               - profile
@@ -36,6 +39,7 @@ selfservice:
                 given_name:
                   essential: true
                 family_name: null
+
   flows:
     error:
       ui_url: http://127.0.0.1:4455/error
@@ -66,10 +70,9 @@ selfservice:
       lifespan: 10m
       ui_url: http://127.0.0.1:4455/registration
       after:
-        password:
+        oidc:
           hooks:
-            -
-              hook: session
+            - hook: session
 
 log:
   level: debug
@@ -94,7 +97,7 @@ identity:
   default_schema_id: default
   schemas:
     - id: default
-      url: file:///etc/config/kratos/identity.schema.json
+      url: file:///etc/config/kratos/identity.traits.schema.json
 
 courier:
   smtp:

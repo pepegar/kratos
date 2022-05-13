@@ -42,7 +42,7 @@ services:
         target: /var/lib/sqlite
         read_only: false
       - type: bind
-        source: ./contrib/quickstart/kratos/email-password
+        source: ./contrib/quickstart/kratos/oidc
         target: /etc/config/kratos
     networks:
       - intranet
